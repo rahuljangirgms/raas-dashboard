@@ -18,6 +18,9 @@ import {
   IconUserCog,
   IconUserOff,
   IconUsers,
+  IconKey,
+  IconMenuDeep,
+  IconUserScan
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -70,13 +73,45 @@ export const sidebarData: SidebarData = {
           badge: '3',
           icon: IconMessages,
         },
+        // {
+        //   title: 'Users',
+        //   url: '/users',
+        //   icon: IconUsers,
+        // },
+      ],
+    },
+{
+  title: 'Core Feature',
+  items: [
+    {
+      title: 'User Management',  // Corrected spelling
+      icon: IconUserScan,  // Icon for User Management section
+      items: [
         {
-          title: 'Users',
-          url: '/users',
-          icon: IconUsers,
+          title: 'Manage Roles',  // Corrected spelling
+          url: '/roles',  // Adjusted route to be more meaningful
+          icon: IconKey,  // Icon for Manage Roles
+        },
+        {
+          title: 'Manage Users',  // Corrected spelling
+          url: '/users',  // Adjusted route to be more meaningful
+          icon: IconUsers,  // Icon for Manage Users
+        },
+        {
+          title: 'Manage Menu',  // Corrected spelling
+          url: '/menuitem',  // Adjusted route to be more meaningful
+          icon: IconMenuDeep,  // Icon for Manage Menu
+        },
+        {
+          title: 'Permission Settings',  // Corrected spelling
+          url: '/permission',  // Adjusted route to be more meaningful
+          icon: IconSettings,  // Icon for Permission Settings
         },
       ],
     },
+  ],
+},
+
     {
       title: 'Pages',
       items: [

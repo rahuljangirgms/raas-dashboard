@@ -73,7 +73,7 @@ export const columns: ColumnDef<Task>[] = [
       }
 
       return (
-        <div className='flex w-[100px] items-center'>
+        <div className='flex w-[200px] items-center'>
           {status.icon && (
             <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
           )}
