@@ -1,0 +1,282 @@
+
+
+
+config/
+└── fonts.ts
+
+context/
+├── font-context.tsx
+├── search-context.tsx
+└── theme-context.tsx
+
+lib/
+└── utils.ts
+
+routes/
+
+stores/
+└── authStore.ts
+
+utils/
+└── handle-server-error.ts
+
+features/
+├── apps/
+│   └── data/
+│       └── index.tsx
+├── auth/
+│   ├── forgot-password/
+│   │   └── components/
+│   │       └── forgot-password-form.tsx
+│   │   └── index.tsx
+│   ├── otp/
+│   │   └── components/
+│   │       └── otp-form.tsx
+│   │   └── index.tsx
+│   ├── sign-in/
+│   │   └── components/
+│   │       └── user-auth-form.tsx
+│   │   ├── index.tsx
+│   │   └── sign-in-2.tsx
+│   ├── sign-up/
+│   │   └── components/
+│   │       └── sign-up-form.tsx
+│   │   ├── index.tsx
+│   │   └── auth-layout.tsx
+├── chats/
+│   └── components/
+│   │   └── new-chat.tsx
+│   └── data/
+│       ├── chat-types.ts
+│       └── convo.json
+│   └── index.tsx
+├── dashboard/
+│   └── components/
+│       ├── overview.tsx
+│       └── recent-sales.tsx
+│   └── index.tsx
+├── errors/
+│   ├── forbidden.tsx
+│   ├── general-error.tsx
+│   ├── maintenance-error.tsx
+│   ├── not-found-error.tsx
+│   └── unauthorized-error.tsx
+├── menuitem/
+│   └── index.tsx
+└── permission/
+|   └── index.tsx
+├── roles/
+│   ├── components/
+│   │   ├── data-table-column-header.tsx
+│   │   ├── data-table-faceted-filter.tsx
+│   │   ├── data-table-pagination.tsx
+│   │   ├── data-table-row-actions.tsx
+│   │   ├── data-table-toolbar.tsx
+│   │   ├── data-table-view-options.tsx
+│   │   ├── users-action-dialog.tsx
+│   │   ├── users-columns.tsx
+│   │   ├── users-delete-dialog.tsx
+│   │   ├── users-dialogs.tsx
+│   │   ├── users-invite-dialog.tsx
+│   │   ├── users-primary-buttons.tsx
+│   │   └── users-table.tsx
+│   ├── context/
+│   │   └── users-context.tsx
+│   ├── data/
+│   │   ├── data.ts
+│   │   ├── schema.ts
+│   │   └── users.ts
+│   └── index.tsx
+├── settings/
+│   ├── account/
+│   │   ├── account-form.tsx
+│   │   └── index.tsx
+│   ├── appearance/
+│   │   ├── appearance-form.tsx
+│   │   └── index.tsx
+│   ├── components/
+│   │   ├── content-section.tsx
+│   │   └── sidebar-nav.tsx
+│   ├── display/
+│   │   ├── display-form.tsx
+│   │   └── index.tsx
+│   ├── notifications/
+│   │   ├── index.tsx
+│   │   └── notifications-form.tsx
+│   └── profile/
+│       ├── index.tsx
+│       └── profile-form.tsx
+├── tasks/
+│   ├── components/
+│   │   ├── columns.tsx
+│   │   ├── data-table-column-header.tsx
+│   │   ├── data-table-faceted-filter.tsx
+│   │   ├── data-table-pagination.tsx
+│   │   ├── data-table-row-actions.tsx
+│   │   ├── data-table-toolbar.tsx
+│   │   ├── data-table-view-options.tsx
+│   │   ├── data-table.tsx
+│   │   ├── tasks-dialogs.tsx
+│   │   ├── tasks-import-dialog.tsx
+│   │   ├── tasks-mutate-drawer.tsx
+│   │   └── tasks-primary-buttons.tsx
+│   ├── context/
+│   │   └── tasks-context.tsx
+│   ├── data/
+│   │   ├── data.ts
+│   │   ├── schema.ts
+│   │   └── tasks.ts
+│   └── index.tsx
+
+├── users/
+│   ├── components/
+│   │   ├── data-table-column-header.tsx
+│   │   ├── data-table-faceted-filter.tsx
+│   │   ├── data-table-pagination.tsx
+│   │   ├── data-table-row-actions.tsx
+│   │   ├── data-table-toolbar.tsx
+│   │   ├── data-table-view-options.tsx
+│   │   ├── data-table.tsx
+│   │   ├── users-action-dialog.tsx
+│   │   ├── users-columns.tsx
+│   │   ├── users-delete-dialog.tsx
+│   │   ├── users-dialogs.tsx
+│   │   ├── users-invite-dialog.tsx
+│   │   └── users-primary-buttons.tsx
+│   ├── context/
+│   │   └── users-context.tsx
+│   ├── data/
+│   │   ├── data.ts
+│   │   ├── schema.ts
+│   │   └── users.ts
+│   └── index.tsx
+
+
+
+components/
+└── layout/
+|    └── data/
+|       ├── sidebar-data.ts
+|       ├── app-sidebar.tsx
+|       ├── header.tsx
+|       ├── main.tsx
+|       ├── nav-group.tsx
+|       ├── nav-user.tsx
+|       ├── team-switcher.tsx
+|       ├── top-nav.tsx
+|       └── types.ts
+└── ui/
+    ├── alert-dialog.tsx
+    ├── alert.tsx
+    ├── avatar.tsx
+    ├── badge.tsx
+    ├── button.tsx
+    ├── calendar.tsx
+    ├── card.tsx
+    ├── checkbox.tsx
+    ├── collapsible.tsx
+    ├── command.tsx
+    ├── dialog.tsx
+    ├── dropdown-menu.tsx
+    ├── form.tsx
+    ├── input.tsx
+    ├── label.tsx
+    ├── popover.tsx
+    ├── radio-group.tsx
+    ├── scroll-area.tsx
+    ├── select.tsx
+    ├── separator.tsx
+    ├── sheet.tsx
+    ├── sidebar.tsx
+    ├── skeleton.tsx
+    ├── switch.tsx
+    ├── table.tsx
+    ├── tabs.tsx
+    ├── textarea.tsx
+    ├── toast.tsx
+    ├── toaster.tsx
+    ├── tooltip.tsx
+    ├── coming-soon.tsx
+    ├── command-menu.tsx
+    ├── confirm-dialog.tsx
+    ├── long-text.tsx
+    ├── password-input.tsx
+    ├── pin-input.tsx
+    ├── profile-dropdown.tsx
+    ├── search.tsx
+    ├── select-dropdown.tsx
+    ├── skip-to-main.tsx
+    └── theme-switch.tsx
+
+
+
+
+routes/
+├── _authenticated/
+│   ├── apps/
+│   │   ├── index.lazy.tsx
+│   │   ├── chats/
+│   │   │   └── index.lazy.tsx
+│   │   ├── help-center/
+│   │   │   └── index.lazy.tsx
+│   │   ├── menuitem/
+│   │   │   └── index.lazy.tsx
+│   │   ├── permission/
+│   │   │   └── index.lazy.tsx
+│   │   ├── roles/
+│   │   │   └── index.lazy.tsx
+│   │   ├── settings/
+│   │   │   ├── account.lazy.tsx
+│   │   │   ├── appearance.lazy.tsx
+│   │   │   ├── display.lazy.tsx
+│   │   │   ├── index.lazy.tsx
+│   │   │   ├── notifications.lazy.tsx
+│   │   │   └── route.lazy.tsx
+│   │   ├── tasks/
+│   │   │   └── index.lazy.tsx
+│   │   ├── users/
+│   │   │   ├── index.lazy.tsx
+│   │   │   └── route.tsx
+├── (auth)/
+│   ├── 500.tsx
+│   ├── forgot-password.lazy.tsx
+│   ├── otp.tsx
+│   ├── sign-in-2.lazy.tsx
+│   ├── sign-in.tsx
+│   └── sign-up.lazy.tsx
+├── (errors)/
+│   ├── 401.lazy.tsx
+│   ├── 403.lazy.tsx
+│   ├── 404.lazy.tsx
+│   ├── 500.lazy.tsx
+│   └── 503.lazy.tsx
+└── _root.tsx
+
+
+
+index.css  
+main.tsx  
+routeTree.gen.ts  
+vite-env.d.ts  
+.gitignore  
+.prettierignore  
+.prettierrc  
+CHANGELOG.md  
+components.json  
+cz.yaml  
+eslint.config.js  
+file-structure.db  
+index.html  
+knip.config.ts  
+LICENSE  
+netlify.toml  
+package-lock.json  
+package.json  
+pnpm-lock.yaml  
+postcss.config.js  
+README.md  
+tailwind.config.ts  
+tsconfig.app.json  
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
