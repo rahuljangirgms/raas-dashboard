@@ -1,11 +1,12 @@
-import { HTMLAttributes, useState } from 'react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+// src/components/UserAuthForm.tsx
+import { HTMLAttributes, useState } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from '@tanstack/react-router';
+import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,11 +14,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { PasswordInput } from '@/components/password-input'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/password-input';
+import { authService } from '@/services/authService'; // Import your auth service
 
-type UserAuthFormProps = HTMLAttributes<HTMLDivElement>
+type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
 
 const formSchema = z.object({
   email: z
@@ -26,16 +28,13 @@ const formSchema = z.object({
     .email({ message: 'Invalid email address' }),
   password: z
     .string()
-    .min(1, {
-      message: 'Please enter your password',
-    })
-    .min(7, {
-      message: 'Password must be at least 7 characters long',
-    }),
-})
+    .min(1, { message: 'Please enter your password' })
+    .min(7, { message: 'Password must be at least 7 characters long' }),
+});
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,16 +42,28 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: '',
       password: '',
     },
-  })
+  });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    // eslint-disable-next-line no-console
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    setErrorMessage(null);
 
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    try {
+      const { error } = await authService.signIn(data.email, data.password);
+      if (error) {
+        setErrorMessage(error);
+        // console.error("Sign-in error:", error);
+        return;
+      }
+      // Use the user object (for example, log it or redirect)
+      // console.log("Signed in successfully:", user);
+    } catch (_err) {
+      // Prefix err with underscore if not used to satisfy ESLint
+      // console.error("Unexpected error during sign-in");
+      setErrorMessage("Unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -94,10 +105,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-            <Button className='mt-2' disabled={isLoading}>
-              Login
+            {errorMessage && (
+              <div className='text-red-500 text-sm'>{errorMessage}</div>
+            )}
+            <Button className='mt-2' disabled={isLoading} type="submit">
+              {isLoading ? 'Logging in...' : 'Login'}
             </Button>
-
             <div className='relative my-2'>
               <div className='absolute inset-0 flex items-center'>
                 <span className='w-full border-t' />
@@ -108,22 +121,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </span>
               </div>
             </div>
-
             <div className='flex items-center gap-2'>
-              <Button
-                variant='outline'
-                className='w-full'
-                type='button'
-                disabled={isLoading}
-              >
+              <Button variant='outline' className='w-full' type='button' disabled={isLoading}>
                 <IconBrandGithub className='h-4 w-4' /> GitHub
               </Button>
-              <Button
-                variant='outline'
-                className='w-full'
-                type='button'
-                disabled={isLoading}
-              >
+              <Button variant='outline' className='w-full' type='button' disabled={isLoading}>
                 <IconBrandFacebook className='h-4 w-4' /> Facebook
               </Button>
             </div>
@@ -131,5 +133,5 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </form>
       </Form>
     </div>
-  )
+  );
 }
