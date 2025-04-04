@@ -18,6 +18,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/password-input';
 import { authService } from '@/services/authService'; // Import your auth service
+import { toast } from '@/hooks/use-toast'
+import { useNavigate } from '@tanstack/react-router';
+
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>;
 
@@ -33,6 +36,7 @@ const formSchema = z.object({
 });
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -49,21 +53,46 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setErrorMessage(null);
 
     try {
-      const { error } = await authService.signIn(data.email, data.password);
+      const {  error } = await authService.signIn(data.email, data.password);
+
       if (error) {
+        // Set the error message and show the toast
         setErrorMessage(error);
-        // console.error("Sign-in error:", error);
+        toast({
+          title: 'Sign-in Failed',
+          description: (
+            <div>
+              <p className='text-red-500'>{error}</p>
+              {/* <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+                <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+              </pre> */}
+            </div>
+          ),
+        });
+
         return;
       }
-      // Use the user object (for example, log it or redirect)
-      // console.log("Signed in successfully:", user);
-    } catch (_err) {
-      // Prefix err with underscore if not used to satisfy ESLint
-      // console.error("Unexpected error during sign-in");
+      // After successful login, navigate to the dashboard
+      navigate({
+        to: '/',  // Path to redirect to
+      }); // Pass an object as per TanStack Router's requirements
+     
+    } catch (_err) {  1.
+      // Catch unexpected errors and show a generic error message
       setErrorMessage("Unexpected error occurred.");
+      toast({
+        title: 'Unexpected Error',
+        description: (
+          <div>
+            <p className='text-yellow-500'>There was an issue with the sign-in process. Please try again later.</p>
+          </div>
+        ),
+      });
     } finally {
       setIsLoading(false);
     }
+
+
   }
 
   return (

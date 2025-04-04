@@ -15,8 +15,14 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
+// import { useAuthStore } from '@/stores/authStore'
 
 export default function Dashboard() {
+
+  // const { auth } = useAuthStore((state) => state); // Extracting state
+  // console.log(auth); // Log the store state
+
+
   return (
     <>
       {/* ===== Top Heading ===== */}

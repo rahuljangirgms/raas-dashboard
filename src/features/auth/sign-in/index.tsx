@@ -1,8 +1,13 @@
 import { Card } from '@/components/ui/card'
 import AuthLayout from '../auth-layout'
 import { UserAuthForm } from './components/user-auth-form'
+import { useAuthStore } from '@/stores/authStore'
 
 export default function SignIn() {
+
+  const { auth } = useAuthStore((state) => state); // Extracting state
+  console.log(auth); // Log the store state
+
   return (
     <AuthLayout>
       <Card className='p-6'>
