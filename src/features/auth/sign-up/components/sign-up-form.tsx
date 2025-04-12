@@ -1,3 +1,4 @@
+// src/components/SignUpForm.tsx
 import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -15,6 +16,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
+import { authService } from '@/services/authService'
+import { toast } from '@/hooks/use-toast'
+import { useNavigate } from '@tanstack/react-router'
 
 type SignUpFormProps = HTMLAttributes<HTMLDivElement>
 
@@ -26,12 +30,8 @@ const formSchema = z
       .email({ message: 'Invalid email address' }),
     password: z
       .string()
-      .min(1, {
-        message: 'Please enter your password',
-      })
-      .min(7, {
-        message: 'Password must be at least 7 characters long',
-      }),
+      .min(1, { message: 'Please enter your password' })
+      .min(7, { message: 'Password must be at least 7 characters long' }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -40,7 +40,9 @@ const formSchema = z
   })
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,14 +53,37 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    // eslint-disable-next-line no-console
-    console.log(data)
+    setErrorMessage(null)
 
-    setTimeout(() => {
+    try {
+      const { error } = await authService.signUp(data.email, data.password)
+
+      if (error) {
+        setErrorMessage(error)
+        toast({
+          title: 'Sign-up Failed',
+          description: <p className="text-red-500">{error}</p>,
+        })
+        return
+      }
+
+      // On success, redirect (e.g. to dashboard or login)
+      navigate({ to: '/' })
+    } catch (_err) {
+      setErrorMessage('Unexpected error occurred.')
+      toast({
+        title: 'Unexpected Error',
+        description: (
+          <p className='text-yellow-500'>
+            There was an issue creating your account. Please try again later.
+          </p>
+        ),
+      })
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -105,8 +130,11 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 </FormItem>
               )}
             />
-            <Button className='mt-2' disabled={isLoading}>
-              Create Account
+            {errorMessage && (
+              <div className='text-red-500 text-sm'>{errorMessage}</div>
+            )}
+            <Button className='mt-2' disabled={isLoading} type='submit'>
+              {isLoading ? 'Creating Account...' : 'Create Account'}
             </Button>
 
             <div className='relative my-2'>
