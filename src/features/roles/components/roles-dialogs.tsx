@@ -1,7 +1,7 @@
-import { useUsers } from '../context/users-context'
-import { UsersActionDialog } from './users-action-dialog'
-import { UsersDeleteDialog } from './users-delete-dialog'
-import { UsersInviteDialog } from './users-invite-dialog'
+import { useUsers } from '../context/Roles-context'
+import { UsersActionDialog } from './roles-action-dialog'
+import { UsersDeleteDialog } from './roles-delete-dialog'
+import { UsersInviteDialog } from './roles-invite-dialog'
 
 export function UsersDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useUsers()
