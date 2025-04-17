@@ -1,10 +1,10 @@
-import { useUsers } from '../context/Roles-context'
+import { useRoles } from '../context/Roles-context'
 import { RolesActionDialog } from './roles-action-dialog'
 import { RolesDeleteDialog } from './roles-delete-dialog'
 import { UsersInviteDialog } from './roles-invite-dialog'
 
 export function RolesDialogs() {
-  const { open, setOpen, currentRow, setCurrentRow } = useUsers()
+  const { open, setOpen, currentRow, setCurrentRow } = useRoles()
   return (
     <>
       <RolesActionDialog

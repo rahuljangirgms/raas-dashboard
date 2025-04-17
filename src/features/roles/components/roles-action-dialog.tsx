@@ -27,7 +27,12 @@ import { SelectDropdown } from '@/components/select-dropdown'
 // import { userTypes } from '../data/data'
 
 
+
+
 import { Role } from '../data/schema'
+import { roleService } from '@/services/roleService'
+
+import { useRoles } from '../context/Roles-context' // make sure this is at the top
 
 // const formSchema = z
 //   .object({
@@ -103,6 +108,8 @@ interface Props {
 
 export function RolesActionDialog({ currentRow, open, onOpenChange }: Props) {
   const isEdit = !!currentRow
+
+  const { refreshRoles } = useRoles()
   // const form = useForm<UserForm>({
   //   resolver: zodResolver(formSchema),
   //   defaultValues: isEdit
@@ -154,22 +161,67 @@ export function RolesActionDialog({ currentRow, open, onOpenChange }: Props) {
   //   })
   //   onOpenChange(false)
   // }
-  const onSubmit = (values: RoleForm) => {
+
+
+
+
+  // const onSubmit = (values: RoleForm) => {
+  //   form.reset()
+
+  //   const message = values.isEdit
+  //     ? 'Role updated successfully.'
+  //     : 'New role created successfully.'
+
+  //   toast({
+  //     title: message,
+  //     description: (
+  //       <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+  //         <code className='text-white'>{JSON.stringify(values, null, 2)}</code>
+  //       </pre>
+  //     ),
+  //   })
+
+  //   onOpenChange(false)
+  // }
+  const onSubmit = async (values: RoleForm) => {
+    const userId = '88f71f67-c1ce-4b98-87df-e510a3d26b35' // replace with actual auth user if needed
+
+    const payload: any = {
+      role_name: values.role_name,
+      role_desc: values.role_desc ?? '',
+    }
+
+    if (values.isEdit && currentRow?.id) {
+      payload.role_id = currentRow.id
+      const { result, error } = await roleService.update(userId, payload)
+
+      if (error) {
+        toast({
+          title: 'Failed to update role',
+          description: error,
+          variant: 'destructive',
+        })
+        return
+      }
+
+      toast({ title: 'Role updated successfully.' })
+    } else {
+      const { result, error } = await roleService.create(userId, payload)
+
+      if (error) {
+        toast({
+          title: 'Failed to create role',
+          description: error,
+          variant: 'destructive',
+        })
+        return
+      }
+
+      toast({ title: 'New role created successfully.' })
+    }
+
+    await refreshRoles() // ✅ refresh table data
     form.reset()
-
-    const message = values.isEdit
-      ? 'Role updated successfully.'
-      : 'New role created successfully.'
-
-    toast({
-      title: message,
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
-    })
-
     onOpenChange(false)
   }
 

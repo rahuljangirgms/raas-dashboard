@@ -1,6 +1,5 @@
-// src/services/roleService.ts
 import { supabase } from '@/lib/supabaseClient'
-import { Role } from '@/types/role' // Create this type based on your schema
+import { Role } from '@/types/role'
 
 export const roleService = {
     // View all roles
@@ -15,25 +14,26 @@ export const roleService = {
         }
     },
 
-    // Get role by ID
-    getById: async (id: string): Promise<{ role: Role | null; error: string | null }> => {
-        const { data, error } = await supabase.rpc('sp_role_view', {
-            p_action: 'GETBYID',
-            p_role_id: id,
+    // Create new role
+    create: async (creatorId: string, payload: any): Promise<{ result: any; error: string | null }> => {
+        const { data, error } = await supabase.rpc('sp_role_actions', {
+            p_action: 'CREATEROLE',
+            p_user_id: creatorId,
+            p_payload: payload,
         })
 
         if (error || data?.status !== 'SUCCESS') {
-            return { role: null, error: error?.message || data?.message || 'Role not found' }
+            return { result: null, error: error?.message || data?.message || 'Create failed' }
         }
 
-        return { role: data.data as Role, error: null }
+        return { result: data.data, error: null }
     },
 
     // Update role
-    update: async (id: string, payload: any): Promise<{ result: any; error: string | null }> => {
-        const { data, error } = await supabase.rpc('sp_role_action', {
+    update: async (userId: string, payload: any): Promise<{ result: any; error: string | null }> => {
+        const { data, error } = await supabase.rpc('sp_role_actions', {
             p_action: 'UPDATEROLE',
-            p_role_id: id,
+            p_user_id: userId,
             p_payload: payload,
         })
 

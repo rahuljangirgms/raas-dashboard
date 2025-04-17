@@ -3,10 +3,10 @@ import {
    IconUserPlus 
   } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
-import { useUsers } from '../context/Roles-context'
+import { useRoles } from '../context/Roles-context'
 
 export function RolesPrimaryButtons() {
-  const { setOpen } = useUsers()
+  const { setOpen } = useRoles()
   return (
     <div className='flex gap-2'>
       {/* <Button
